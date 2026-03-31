@@ -93,7 +93,9 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="border-r border-[#1e3a5f] bg-gradient-to-b from-[#3A6EA5] to-[#003366]">
+    <Sidebar
+      className="border-r border-[#1e3a5f] [&_[data-slot=sidebar-inner]]:bg-gradient-to-b [&_[data-slot=sidebar-inner]]:from-[#3A6EA5] [&_[data-slot=sidebar-inner]]:to-[#003366]"
+    >
       <SidebarContent className="py-2">
         {navigation.map((group, gi) => (
           <SidebarGroup key={gi}>
