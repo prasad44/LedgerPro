@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Settings, CreditCard, Users, Building2, Bell, Shield, ArrowRight } from "lucide-react";
+import { Settings, CreditCard, Users, Building2, Bell, Shield, Key, Webhook, ArrowRight } from "lucide-react";
 
 const settingsLinks = [
   { name: "Company Information", desc: "Update your company name, address, and logo", href: "/settings/company", icon: Building2 },
@@ -10,6 +10,8 @@ const settingsLinks = [
   { name: "Users & Roles", desc: "Invite team members and manage permissions", href: "/settings/users", icon: Users },
   { name: "Notifications", desc: "Configure email and in-app notifications", href: "/settings/notifications", icon: Bell },
   { name: "Security", desc: "Password, two-factor authentication, sessions", href: "/settings/security", icon: Shield },
+  { name: "API Keys", desc: "Generate and manage API keys for integrations", href: "/settings/api-keys", icon: Key },
+  { name: "Webhooks", desc: "Configure endpoints for real-time event notifications", href: "/settings/webhooks", icon: Webhook },
 ];
 
 export default function SettingsPage() {
