@@ -108,7 +108,11 @@ export default function EstimatesPage() {
 
   const { data: customers = [] } = useQuery<Array<{ id: string; name: string }>>({
     queryKey: ["customers-list"],
-    queryFn: () => fetch("/api/v1/customers?active=true").then((r) => r.json()),
+    queryFn: async () => {
+      const res = await fetch("/api/v1/customers?active=true");
+      const json = await res.json();
+      return Array.isArray(json) ? json : json.data ?? [];
+    },
   });
 
   const createMutation = useMutation({
