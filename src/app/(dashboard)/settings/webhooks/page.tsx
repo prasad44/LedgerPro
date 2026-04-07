@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { ALL_WEBHOOK_EVENTS } from "@/lib/webhooks/webhook.service";
+import { ALL_WEBHOOK_EVENTS } from "@/lib/webhooks/events";
 import { FeatureGate } from "@/components/feature-gate";
 
 import {

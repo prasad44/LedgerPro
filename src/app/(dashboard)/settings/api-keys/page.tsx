@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { AVAILABLE_SCOPES } from "@/lib/api/api-keys";
+import { AVAILABLE_SCOPES } from "@/lib/api/api-key-scopes";
 import { FeatureGate } from "@/components/feature-gate";
 
 import {

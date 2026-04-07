@@ -126,5 +126,35 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
   }
+}
+
+/* ─── Landing page animations ─────────────────────── */
+@keyframes lp-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes lp-float-alt {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes lp-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes lp-bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+.lp-float {
+  animation: lp-float 6s ease-in-out infinite;
+}
+.lp-float-alt {
+  animation: lp-float-alt 5s ease-in-out 1.5s infinite;
+}
+.lp-bar-grow {
+  animation: lp-bar-grow 1s ease-out forwards;
+  transform-origin: bottom;
 }

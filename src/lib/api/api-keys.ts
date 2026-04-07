@@ -59,24 +59,4 @@ export function checkScope(apiKey: { scopes: string[] }, requiredScope: string):
   return false;
 }
 
-export const AVAILABLE_SCOPES = [
-  "read:accounts",
-  "write:accounts",
-  "read:journal-entries",
-  "write:journal-entries",
-  "read:customers",
-  "write:customers",
-  "read:vendors",
-  "write:vendors",
-  "read:invoices",
-  "write:invoices",
-  "read:bills",
-  "write:bills",
-  "read:payments",
-  "write:payments",
-  "read:expenses",
-  "write:expenses",
-  "read:reports",
-  "read:banking",
-  "write:banking",
-] as const;
+export { AVAILABLE_SCOPES } from "./api-key-scopes";

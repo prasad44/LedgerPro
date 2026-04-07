@@ -84,7 +84,7 @@ export function Topbar() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem>
-            <Link href="/settings" className="flex items-center w-full">
+            <Link href="/select-org" className="flex items-center w-full">
               <Building2 className="mr-2 h-4 w-4" />
               Switch Company
             </Link>

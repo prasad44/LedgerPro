@@ -29,7 +29,7 @@ export const authConfig: NextAuthConfig = {
         isLoggedIn &&
         (nextUrl.pathname === "/login" || nextUrl.pathname === "/register")
       ) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
+        return Response.redirect(new URL("/select-org", nextUrl));
       }
 
       return true;
