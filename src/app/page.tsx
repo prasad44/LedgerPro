@@ -2,6 +2,10 @@
 
 import { useState, useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { usePaddle } from "@/components/paddle-provider";
+import { PADDLE_PRICES } from "@/lib/paddle/config";
+import type { SubscriptionTier } from "@/lib/subscriptions/tiers";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen,
@@ -96,6 +100,7 @@ const FEATURES: Feature[] = [
 
 interface Plan {
   name: string;
+  tier: SubscriptionTier;
   monthly: number;
   desc: string;
   features: string[];
@@ -105,6 +110,7 @@ interface Plan {
 const PLANS: Plan[] = [
   {
     name: "Starter",
+    tier: "STARTER",
     monthly: 19,
     desc: "For freelancers & sole proprietors",
     features: [
@@ -118,6 +124,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Standard",
+    tier: "STANDARD",
     monthly: 39,
     desc: "For small businesses with AP/AR needs",
     features: [
@@ -132,6 +139,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Premium",
+    tier: "PREMIUM",
     monthly: 69,
     desc: "For growing, multi-currency businesses",
     features: [
@@ -147,6 +155,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Enterprise",
+    tier: "ENTERPRISE",
     monthly: 149,
     desc: "Full control for established businesses",
     features: [
@@ -253,9 +262,23 @@ function Reveal({ children, className = "", delay = 0 }: { children: ReactNode; 
    ──────────────────────────────────────────────────────── */
 
 export default function LandingPage() {
+  const { data: session } = useSession();
+  const { openCheckout, isLoaded: paddleLoaded } = usePaddle();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [annual, setAnnual] = useState(false);
+
+  function handleChoosePlan(plan: Plan) {
+    if (!session) {
+      window.location.href = "/register";
+      return;
+    }
+    const priceId = PADDLE_PRICES[plan.tier];
+    if (!priceId || !session.user?.email) return;
+    openCheckout(priceId, session.user.email, {
+      organizationId: session.user.organizationId,
+    });
+  }
 
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 30);
@@ -816,17 +839,17 @@ export default function LandingPage() {
                       ))}
                     </ul>
 
-                    <Link href="/register" className="mt-auto block">
-                      <Button
-                        className={`w-full justify-center font-semibold ${
-                          plan.popular
-                            ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                            : "bg-gray-900 text-white hover:bg-gray-800"
-                        }`}
-                      >
-                        Start Free Trial
-                      </Button>
-                    </Link>
+                    <Button
+                      className={`mt-auto w-full justify-center font-semibold ${
+                        plan.popular
+                          ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                          : "bg-gray-900 text-white hover:bg-gray-800"
+                      }`}
+                      onClick={() => handleChoosePlan(plan)}
+                      disabled={session ? !paddleLoaded : false}
+                    >
+                      {session ? "Subscribe Now" : "Start Free Trial"}
+                    </Button>
                   </div>
                 </Reveal>
               );
