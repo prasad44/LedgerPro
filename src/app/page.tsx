@@ -269,15 +269,15 @@ export default function LandingPage() {
   const [annual, setAnnual] = useState(false);
 
   function handleChoosePlan(plan: Plan) {
-    if (!session) {
-      window.location.href = "/register";
-      return;
-    }
     const priceId = PADDLE_PRICES[plan.tier];
-    if (!priceId || !session.user?.email) return;
-    openCheckout(priceId, session.user.email, {
-      organizationId: session.user.organizationId,
-    });
+    if (!priceId) return;
+    openCheckout(
+      priceId,
+      session?.user?.email ?? undefined,
+      session?.user?.organizationId
+        ? { organizationId: session.user.organizationId }
+        : undefined,
+    );
   }
 
   useEffect(() => {
@@ -846,9 +846,9 @@ export default function LandingPage() {
                           : "bg-gray-900 text-white hover:bg-gray-800"
                       }`}
                       onClick={() => handleChoosePlan(plan)}
-                      disabled={session ? !paddleLoaded : false}
+                      disabled={!paddleLoaded}
                     >
-                      {session ? "Subscribe Now" : "Start Free Trial"}
+                      Start Free Trial
                     </Button>
                   </div>
                 </Reveal>
