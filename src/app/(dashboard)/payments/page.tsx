@@ -132,8 +132,11 @@ export default function PaymentsPage() {
   // ── Customers ──
   const { data: customers = [] } = useQuery<Customer[]>({
     queryKey: ["customers"],
-    queryFn: () =>
-      fetch("/api/v1/customers?active=true").then((r) => r.json()),
+    queryFn: async () => {
+      const res = await fetch("/api/v1/customers?active=true");
+      const json = await res.json();
+      return Array.isArray(json) ? json : json.data ?? [];
+    },
   });
 
   // ── Bank accounts ──

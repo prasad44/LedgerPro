@@ -106,15 +106,14 @@ export default function NewInvoicePage() {
 
   // ---- Data: Customers ----
   const [customerSearch, setCustomerSearch] = useState("");
-  const { data: customersRaw } = useQuery({
+  const { data: customers = [] } = useQuery<Customer[]>({
     queryKey: ["customers"],
-    queryFn: () =>
-      fetch("/api/v1/customers").then((r) => r.json()) as Promise<{
-        customers: Customer[];
-        total: number;
-      }>,
+    queryFn: async () => {
+      const res = await fetch("/api/v1/customers?active=true");
+      const json = await res.json();
+      return Array.isArray(json) ? json : json.data ?? [];
+    },
   });
-  const customers = (customersRaw?.customers ?? []) as Customer[];
 
   const filteredCustomers = useMemo(() => {
     if (!customerSearch.trim()) return customers;
